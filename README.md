@@ -31,3 +31,15 @@ The self-improvement track never promotes model-generated examples solely becaus
 The objective is to continuously close measured gaps against strong frontier and open models. The repository does not make an unverified claim that ATHLLM beats frontier models. Every comparison should pin model/version, prompt/template, tool budget, context length, decoding parameters, benchmark version and evaluator version.
 
 See `docs/TRAINING_PLAN.md` for the research loop.
+
+## AI company + Arabic learning program
+
+ATHLLM is also designed as an open learning path for Arabic-speaking AI students and future founders. The project connects the full stack:
+
+**AI theory → model research → engineering → product → customers → pricing → distribution → company economics.**
+
+Each major experiment should explain both the technical lesson and the potential product/business implication. For example, improving Arabic token efficiency can be studied as a modeling problem and then measured as an inference-cost and product-economics problem.
+
+The repository will publish research notebooks, architecture decisions, experiment failures, benchmark methodology, data/model cards, product experiments, and cost reports so learners can see how an AI company is built rather than only seeing the final model.
+
+See docs/AI_COMPANY_LEARNING_PROGRAM.md.
