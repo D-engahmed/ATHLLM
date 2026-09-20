@@ -23,3 +23,8 @@ Comparisons must pin model version, prompt, tool budget, context, decoding, benc
 
 ## Scaling
 Validate the architecture at 4B first, then investigate 7–9B and MoE variants. Do not spend frontier-scale compute until the architecture and data pipeline survive ablation studies.
+
+
+## Low-cost distillation path
+
+For constrained hardware, do not run the 397B teacher on Kaggle. Use an expensive teacher offline to generate a verified hard-example dataset, then train ATHLLM-4B with distillation/SFT and verifiable RL. Start with a 50B-token student run, then 100B and 300B only if validation shows positive scaling. Quantize the validated student to int4 for Kaggle inference. See `docs/KAGGLE_DISTILLATION.md` and `configs/distillation_4b_kaggle.yaml`.
