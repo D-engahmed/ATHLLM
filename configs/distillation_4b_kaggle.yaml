@@ -1,0 +1,34 @@
+student:
+  model: ATHLLM-4B
+  quantization:
+    method: int4
+    calibration: held_out_reasoning_and_code
+teacher:
+  primary: Ornith-1.5-397B
+  strategy: offline_teacher
+  use_for: hardest_examples
+  fallback: strong_open_teacher
+data:
+  bootstrap_candidates: 10000000
+  accepted_verified_examples: 500000
+  target_tokens_initial: 50000000000
+  later_scale_tokens: [100000000000, 300000000000]
+  require_independent_verification: true
+stages:
+  - name: teacher_distillation
+    objective: response_distillation
+  - name: reasoning_sft
+    objective: verified_reasoning
+  - name: coding_agent_sft
+    objective: executable_task_success
+  - name: reasoning_rl
+    objective: verifier_reward
+  - name: coding_rl
+    objective: execution_reward
+  - name: self_improvement_rl
+    objective: independently_verified_generated_tasks
+kaggle:
+  optimize_for: single_or_limited_gpu
+  use_qlora: true
+  checkpoint_format: safetensors
+  final_quantization: int4
