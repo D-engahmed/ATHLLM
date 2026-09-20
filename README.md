@@ -1,21 +1,33 @@
-# AthLLM
+# ATHLLM
 
-**AthLLM** is an open-source bilingual (Arabic-English) GPT-style foundation model engineered from the ground up. The project demonstrates the complete lifecycle of modern large language model development—from data collection and curation to tokenizer training, transformer architecture, distributed training, evaluation, optimization, deployment, and security.
+ATHLLM is an open research foundation for an Arabic-English, reasoning-first, coding-capable, tool-using language model.
 
-Rather than focusing on model scale, AthLLM emphasizes engineering excellence, reproducibility, and a deep understanding of every stage of the LLM pipeline. The project is designed to provide a transparent, production-oriented implementation that showcases how modern foundation models are built and operated.
+## Spark-X2.5 foundation
 
-AthLLM is optimized for both Arabic and English, with particular emphasis on high-quality Arabic language understanding, technical knowledge, software engineering, mathematics, artificial intelligence, and cybersecurity.
+This branch adds a Spark-X2.5-inspired 4B-class foundation. The official Spark-X2.5 documentation describes a hybrid attention design using three sliding-window layers followed by one full-attention layer, with native context up to 1M tokens. The implementation is isolated from checkpoint loading so ATHLLM can evolve independently.
 
-## Vision
+Run the smoke test with: `python -m athllm.models.spark25`
 
-To build a world-class open-source bilingual foundation model that advances Arabic AI while serving as a complete educational and engineering reference for modern LLM development.
+Load an authorized upstream checkpoint with: `python -m athllm.tools.load_spark --model XHToken/Spark-X2.5-4B`
 
-## Core Principles
+Weights are not committed to GitHub; the loader obtains them locally through Transformers.
 
-* End-to-end implementation of the LLM lifecycle
-* Strong Arabic and English language support
-* High-quality, carefully curated training data
-* Reproducible experiments and transparent benchmarks
-* Production-ready deployment and monitoring
-* Security-first design and evaluation
-* Open-source collaboration and continuous improvement
+## 5T-token semantic training pipeline
+
+The target is a 5T-token training capacity, not a claim that 5T raw tokens are high quality. The corpus pipeline is designed around provenance/licensing, language and domain balancing, exact and near deduplication, semantic quality scoring, spam/boilerplate rejection, code execution checks, benchmark contamination exclusion, and immutable manifests.
+
+Start with: `python -m athllm.data.build_manifest --input ./data/raw --output ./data/manifests/train.jsonl`
+
+## Three RL tracks
+
+1. Verifiable reasoning RL — math, logic, science and planning with executable or independently checkable rewards.
+2. Coding/agent RL — repository repair, terminal tasks, tool calling and multi-step coding rewarded by task outcomes.
+3. Self-improvement RL — verified task generation, rollout, independent verification, failure mining and curriculum updates.
+
+The self-improvement track never promotes model-generated examples solely because the model generated them.
+
+## Frontier evaluation
+
+The objective is to continuously close measured gaps against strong frontier and open models. The repository does not make an unverified claim that ATHLLM beats frontier models. Every comparison should pin model/version, prompt/template, tool budget, context length, decoding parameters, benchmark version and evaluator version.
+
+See `docs/TRAINING_PLAN.md` for the research loop.

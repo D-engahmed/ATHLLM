@@ -1,0 +1,36 @@
+model:
+  vocab_size: 131072
+  hidden_size: 2560
+  intermediate_size: 10240
+  num_hidden_layers: 36
+  num_attention_heads: 16
+  num_key_value_heads: 4
+  max_position_embeddings: 1048576
+  sliding_window: 512
+  attention_pattern: "SSSF"
+  rope_theta_sliding: 10000.0
+  rope_theta_full: 5000000.0
+  partial_rotary_factor_full: 0.25
+  tie_word_embeddings: true
+checkpoint:
+  source: "XHToken/Spark-X2.5-4B"
+  local_dir: "./checkpoints/spark-x25-4b"
+  trust_remote_code: true
+data:
+  target_tokens: 5000000000000
+  semantic_quality_min: 0.85
+  max_duplicate_ratio: 0.05
+  contamination_policy: "exclude-eval-overlap"
+  mixture:
+    reasoning: 0.20
+    code: 0.25
+    technical: 0.20
+    multilingual: 0.15
+    general: 0.15
+    synthetic_verified: 0.05
+rl:
+  tracks: [reasoning_verifiable, coding_execution, self_improvement]
+  require_reproducible_reward: true
+evaluation:
+  compare_to_frontier: true
+  require_fixed_versions: true
